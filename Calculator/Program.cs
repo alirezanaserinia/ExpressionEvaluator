@@ -19,8 +19,8 @@ namespace Calculator
                 menuItems.Add("Expression evaluator");
                 menuItems.Add("History");
                 menuItems.Add("Finish");
-                Menu menu = new Menu(menuItems);
 
+                Menu menu = new Menu(menuItems);
                 /*Console.Write(menu.Show());*/
 
                 input = Console.ReadLine();
@@ -41,6 +41,7 @@ namespace Calculator
                     {
                         Calculator calc = new Calculator();
                         result = calc.Calc(expression);
+
                     }
 
                     if (expression.isValid)

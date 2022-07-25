@@ -14,7 +14,7 @@ namespace Calculator
         public FileHistoryHandler(MathematicalExpression mathExpr)
         {
             FileName = "CalculatorLogger.txt";
-
+            
 
         }
 
