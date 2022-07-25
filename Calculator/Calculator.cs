@@ -15,7 +15,6 @@ namespace Calculator
 
         }
 
-
         public double Calc(MathematicalExpression expr)
         {
             values = new List<double>(expr.values);
