@@ -10,13 +10,23 @@ namespace Calculator
         static void Main(string[] args)
         {
             string? input = "";
-            bool isValid = true;
+            int userOption = -1;
             double result = 0;
-            string errorMessage = "";
 
             while (true)
             {
+                List<string> menuItems = new List<string>();
+                menuItems.Add("Expression evaluator");
+                menuItems.Add("History");
+                menuItems.Add("Finish");
+                Menu menu = new Menu(menuItems);
+
+                /*Console.Write(menu.Show());*/
+
                 input = Console.ReadLine();
+                /*userOption = int.Parse(input);
+                menu.ItemProvider(userOption);*/
+
                 if (input == "HISTORY")
                 {
                     Console.Write(File.ReadAllText("CalculatorLogger.txt"));
@@ -25,55 +35,23 @@ namespace Calculator
                     break;
                 else
                 {
-                    try
-                    {
-                        MathematicalExpression expression = new MathematicalExpression(input);
-                        isValid = true;
+                    MathematicalExpression expression = new MathematicalExpression(input);
 
-                        ////
+                    if (expression.isValid)
+                    {
                         Calculator calc = new Calculator();
                         result = calc.Calc(expression);
-
-                    }
-                    catch (StartWithOperatorException ex)
-                    {
-                        isValid = false;
-                        errorMessage = ex.Message;
-                        Console.WriteLine(ex.Message.ToString());
-                    }
-                    catch (EndWithOperatorException ex)
-                    {
-                        isValid = false;
-                        errorMessage = ex.Message;
-                        Console.WriteLine(ex.Message.ToString());
-                    }
-                    catch (InvalidCharacterException ex)
-                    {
-                        isValid = false;
-                        errorMessage = ex.Message;
-                        Console.WriteLine(ex.Message.ToString());
-                    }
-                    catch (Exceptions.DivideByZeroException ex)
-                    {
-                        isValid = false;
-                        errorMessage = ex.Message;
-                        Console.WriteLine(ex.Message.ToString());
-                    }
-                    catch (ConsecutiveOperatorsException ex)
-                    {
-                        isValid = false;
-                        errorMessage = ex.Message;
-                        Console.WriteLine(ex.Message.ToString());
                     }
 
-                    if (isValid)
+                    if (expression.isValid)
                     {
                         Console.WriteLine(result);
-                        Logging.LogValidCalculation(input, result.ToString());
+                        FileHistoryHandler.LogValidCalculation(input, result.ToString());
                     }
                     else
                     {
-                        Logging.LogInvalidCalculation(input, errorMessage);
+                        Console.WriteLine(expression.errorMessage);
+                        FileHistoryHandler.LogInvalidCalculation(input, expression.errorMessage);
                     }
                 }
 

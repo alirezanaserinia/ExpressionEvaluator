@@ -6,9 +6,22 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-    public class Logging
+    public class FileHistoryHandler
     {
         public static string FileName = "CalculatorLogger.txt";
+
+
+        public FileHistoryHandler(MathematicalExpression mathExpr)
+        {
+            FileName = "CalculatorLogger.txt";
+
+
+        }
+
+        public void HandleLog(MathematicalExpression mathExpr)
+        {
+
+        }
         public static void LogValidCalculation(string input, string result)
         {
             File.AppendAllText(FileName, String.Format("User valid calculation at {0} :\n", DateTime.Now));
