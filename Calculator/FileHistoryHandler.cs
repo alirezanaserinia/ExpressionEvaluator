@@ -20,10 +20,6 @@ namespace Calculator
             ErrorMessage = errorMesssage;
         }
 
-        public void HandleLog()
-        {
-
-        }
         public void LogValidCalculation()
         {
             StringBuilder sbuf = new StringBuilder();
@@ -46,6 +42,11 @@ namespace Calculator
             sbuf.Append("\n\n");
 
             Logger.Write(FileName, sbuf.ToString());
+        }
+
+        public string GetLogs()
+        {
+            return Logger.Read(FileName);
         }
     }
 }
