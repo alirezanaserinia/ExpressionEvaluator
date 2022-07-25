@@ -44,15 +44,19 @@ namespace Calculator
 
                     }
 
+                    FileHistoryHandler historyHandler = new FileHistoryHandler(input, result.ToString(), expression.errorMessage);
+
                     if (expression.isValid)
                     {
                         Console.WriteLine(result);
-                        FileHistoryHandler.LogValidCalculation(input, result.ToString());
+                        historyHandler.LogValidCalculation();
+
                     }
                     else
                     {
                         Console.WriteLine(expression.errorMessage);
-                        FileHistoryHandler.LogInvalidCalculation(input, expression.errorMessage);
+                        historyHandler.LogInvalidCalculation();
+
                     }
                 }
 

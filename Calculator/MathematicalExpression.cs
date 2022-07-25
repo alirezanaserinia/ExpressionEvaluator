@@ -9,7 +9,7 @@ namespace Calculator
 {
     public class MathematicalExpression
     {
-        private readonly string inputString;
+        public readonly string inputString;
         public string errorMessage;
         public bool isValid;
 

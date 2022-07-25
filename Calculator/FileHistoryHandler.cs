@@ -9,35 +9,43 @@ namespace Calculator
     public class FileHistoryHandler
     {
         public static string FileName = "CalculatorLogger.txt";
+        private string UserInput;
+        private string CalculationResult;
+        private string ErrorMessage;
 
-
-        public FileHistoryHandler(MathematicalExpression mathExpr)
+        public FileHistoryHandler(string userInput, string calcResult, string errorMesssage)
         {
-            FileName = "CalculatorLogger.txt";
-            
-
+            UserInput = userInput;
+            CalculationResult = calcResult;
+            ErrorMessage = errorMesssage;
         }
 
-        public void HandleLog(MathematicalExpression mathExpr)
+        public void HandleLog()
         {
 
         }
-        public static void LogValidCalculation(string input, string result)
+        public void LogValidCalculation()
         {
-            File.AppendAllText(FileName, String.Format("User valid calculation at {0} :\n", DateTime.Now));
-            File.AppendAllText(FileName, input);
-            File.AppendAllText(FileName, " = ");
-            File.AppendAllText(FileName, result);
-            File.AppendAllText(FileName, "\n\n");
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append(String.Format("User valid calculation at {0} :\n", DateTime.Now));
+            sbuf.Append(UserInput);
+            sbuf.Append(" = ");
+            sbuf.Append(CalculationResult);
+            sbuf.Append("\n\n");
+
+            Logger.Write(FileName, sbuf.ToString());
         }
 
-        public static void LogInvalidCalculation(string input, string errorMessage)
+        public void LogInvalidCalculation()
         {
-            File.AppendAllText(FileName, String.Format("User invalid input at {0} :\n", DateTime.Now));
-            File.AppendAllText(FileName, input);
-            File.AppendAllText(FileName, "\nThe error message : ");
-            File.AppendAllText(FileName, errorMessage);
-            File.AppendAllText(FileName, "\n\n");
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.Append(String.Format("User invalid input at {0} :\n", DateTime.Now));
+            sbuf.Append(UserInput);
+            sbuf.Append("\nThe error message : ");
+            sbuf.Append(ErrorMessage);
+            sbuf.Append("\n\n");
+
+            Logger.Write(FileName, sbuf.ToString());
         }
     }
 }
