@@ -5,7 +5,6 @@ using Calculator.Domain;
 using System;
 using System.Data;
 
-
 namespace Calculator
 {
     class Program
