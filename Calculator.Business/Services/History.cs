@@ -43,6 +43,5 @@ namespace Calculator.Business.Services
             errors.Append("\n");
             return errors.ToString();
         }
-
     }
 }

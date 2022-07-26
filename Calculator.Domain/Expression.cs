@@ -53,7 +53,7 @@ namespace Calculator.Domain
             }
         }
 
-        public void SetOperators() // bayad tamiz beshe
+        public void SetOperators()
         {
             Operators = new List<char>();
             char[] input_chars = InputExpression.ToCharArray();

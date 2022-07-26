@@ -22,6 +22,12 @@ namespace Calculator.Business.Services
             _logger = logger;
             _history = history;
         }
+
+        public string GetHistory()
+        {
+            return _history.GetHistory();
+        }
+
         public double Calculate(Expression expression)
         {
             values = new List<double>(expression.Values);
@@ -95,9 +101,5 @@ namespace Calculator.Business.Services
 
             operators.RemoveAt(operatorIndex);
         }
-
     }
-
-
-
 }

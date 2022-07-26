@@ -15,6 +15,7 @@ namespace Calculator
             Logger logger = new Logger();
             History history = new History();
             ExpressionValidator validator = new ExpressionValidator();
+            Evaluator calculator = new Evaluator(logger, history);
 
             while (true)
             {
@@ -22,7 +23,7 @@ namespace Calculator
 
                 if (input == "HISTORY")
                 {
-                    Console.Write(history.GetHistory());
+                    Console.Write(calculator.GetHistory());
                 }
                 else if (input == "FINISH")
                 {
@@ -35,7 +36,6 @@ namespace Calculator
                     if (isValid)
                     {
                         Expression expression = new Expression(input);
-                        var calculator = new Evaluator(logger, history);
                         var result = calculator.Calculate(expression);
                         Console.WriteLine(result);
                     }
