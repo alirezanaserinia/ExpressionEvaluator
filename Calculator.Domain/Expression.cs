@@ -15,40 +15,22 @@ namespace Calculator.Domain
             SetOperators();
         }
 
-        private void SetValues() // bayad tamiz beshe
+        private void SetValues()
         {
             char[] input_chars = InputExpression.ToCharArray();
             Values = new List<double>();
 
-            if (input_chars.Length == 1)
+            for (int i = 0; i < input_chars.Length; i++)
             {
-                if (char.IsDigit(input_chars[0]))
-                {
-                    Values.Add(int.Parse(input_chars[0].ToString()));
-                }
-            }
-
-            for (int i = 0; i < input_chars.Length - 1; i++)
-            {
-                if (input_chars[i] >= '0' && input_chars[i] <= '9')
+                if (char.IsDigit(input_chars[i]))
                 {
                     StringBuilder sbuf = new StringBuilder();
-                    while (i < input_chars.Length && input_chars[i] >= '0' && input_chars[i] <= '9')
+                    while (i < input_chars.Length && char.IsDigit(input_chars[i]))
                     {
                         sbuf.Append(input_chars[i++]);
                     }
                     Values.Add(int.Parse(sbuf.ToString()));
                     i--;
-                }
-                else if (input_chars[i] == '+' || input_chars[i] == '-' || input_chars[i] == '*' || input_chars[i] == '/')
-                {
-                    if (Char.IsDigit(input_chars[i + 1]))
-                    {
-                        if (i + 1 == input_chars.Length - 1)
-                        {
-                            Values.Add(Char.GetNumericValue(input_chars[i + 1]));
-                        }
-                    }
                 }
             }
         }

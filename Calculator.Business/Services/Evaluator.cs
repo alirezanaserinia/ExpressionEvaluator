@@ -80,23 +80,23 @@ namespace Calculator.Business.Services
             operators.RemoveAt(operatorIndex);
         }
 
-        private void applyAdd(int operatorIndex)
-        {
-            int firstOperandIndex = operatorIndex;
-            int secondOperandIndex = operatorIndex + 1;
-
-            values[firstOperandIndex] = values[firstOperandIndex] + values[secondOperandIndex];
-            values.RemoveAt(secondOperandIndex);
-
-            operators.RemoveAt(operatorIndex);
-        }
-
         private void applySubtract(int operatorIndex)
         {
             int firstOperandIndex = operatorIndex;
             int secondOperandIndex = operatorIndex + 1;
 
             values[firstOperandIndex] = values[firstOperandIndex] - values[secondOperandIndex];
+            values.RemoveAt(secondOperandIndex);
+
+            operators.RemoveAt(operatorIndex);
+        }
+
+        private void applyAdd(int operatorIndex)
+        {
+            int firstOperandIndex = operatorIndex;
+            int secondOperandIndex = operatorIndex + 1;
+
+            values[firstOperandIndex] = values[firstOperandIndex] + values[secondOperandIndex];
             values.RemoveAt(secondOperandIndex);
 
             operators.RemoveAt(operatorIndex);

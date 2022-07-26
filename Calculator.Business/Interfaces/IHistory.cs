@@ -9,6 +9,5 @@ namespace Calculator.Business.Interfaces
     public interface IHistory
     {
         public string GetHistory();
-
     }
 }

@@ -8,9 +8,7 @@ namespace Calculator.Business.Interfaces
 {
     public interface ILogger
     {
-
         public void Info(string info);
         public void Error(string error);
-
     }
 }

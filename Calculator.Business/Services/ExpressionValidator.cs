@@ -81,7 +81,7 @@ namespace Calculator.Business.Services
 
             for (int i = 0; i < input_chars.Length - 1; i++)
             {
-                if ((input_chars[i] >= '0' && input_chars[i] <= '9') ||
+                if ((char.IsDigit(input_chars[i])) ||
                     (input_chars[i] == '+' || input_chars[i] == '-' || input_chars[i] == '*' || input_chars[i] == '/'))
                 {
                     continue;
