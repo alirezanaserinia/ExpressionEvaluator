@@ -19,6 +19,15 @@ namespace Calculator.Domain
         {
             char[] input_chars = InputExpression.ToCharArray();
             Values = new List<double>();
+
+            if (input_chars.Length == 1)
+            {
+                if (char.IsDigit(input_chars[0]))
+                {
+                    Values.Add(int.Parse(input_chars[0].ToString()));
+                }
+            }
+
             for (int i = 0; i < input_chars.Length - 1; i++)
             {
                 if (input_chars[i] >= '0' && input_chars[i] <= '9')

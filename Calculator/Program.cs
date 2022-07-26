@@ -16,19 +16,18 @@ namespace Calculator
             History history = new History();
             ExpressionValidator validator = new ExpressionValidator();
 
-            string? input = "";
-            double result = 0;
-
             while (true)
             {
-                input = Console.ReadLine();
+                var input = Console.ReadLine();
 
                 if (input == "HISTORY")
                 {
                     Console.Write(history.GetHistory());
                 }
                 else if (input == "FINISH")
+                {
                     break;
+                }
                 else
                 {
                     var isValid = validator.CheckExprValidation(input).Success;
@@ -37,7 +36,7 @@ namespace Calculator
                     {
                         Expression expression = new Expression(input);
                         var calculator = new Evaluator(logger, history);
-                        result = calculator.Calculate(expression);
+                        var result = calculator.Calculate(expression);
                         Console.WriteLine(result);
                     }
                     else
@@ -47,7 +46,6 @@ namespace Calculator
                         Console.WriteLine(Message);
                     }
                 }
-
             }
         }
     }

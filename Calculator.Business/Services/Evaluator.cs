@@ -37,13 +37,13 @@ namespace Calculator.Business.Services
                 {
                     applyDivide(operators.IndexOf('/'));
                 }
-                while (operators.IndexOf('+') != -1)
-                {
-                    applyAdd(operators.IndexOf('+'));
-                }
                 while (operators.IndexOf('-') != -1)
                 {
                     applySubtract(operators.IndexOf('-'));
+                }
+                while (operators.IndexOf('+') != -1)
+                {
+                    applyAdd(operators.IndexOf('+'));
                 }
             }
             double result = values[0];
