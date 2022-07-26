@@ -1,7 +1,10 @@
 ﻿using Calculator;
-using Calculator.Exceptions;
+using Calculator.Business.Services;
+using Calculator.Business.Utils;
+using Calculator.Domain;
 using System;
 using System.Data;
+
 
 namespace Calculator
 {
@@ -9,74 +12,40 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            string? input = "";
-            bool isValid = true;
-            double result = 0;
-            string errorMessage = "";
+            Logger logger = new Logger();
+            History history = new History();
+            ExpressionValidator validator = new ExpressionValidator();
+            Evaluator calculator = new Evaluator(logger, history);
 
             while (true)
             {
-                input = Console.ReadLine();
+                var input = Console.ReadLine();
+
                 if (input == "HISTORY")
                 {
-                    Console.Write(File.ReadAllText("CalculatorLogger.txt"));
+                    Console.Write(calculator.GetHistory());
                 }
                 else if (input == "FINISH")
+                {
                     break;
+                }
                 else
                 {
-                    try
-                    {
-                        MathematicalExpression expression = new MathematicalExpression(input);
-                        isValid = true;
-
-                        ////
-                        Calculator calc = new Calculator();
-                        result = calc.Calc(expression);
-
-                    }
-                    catch (StartWithOperatorException ex)
-                    {
-                        isValid = false;
-                        errorMessage = ex.Message;
-                        Console.WriteLine(ex.Message.ToString());
-                    }
-                    catch (EndWithOperatorException ex)
-                    {
-                        isValid = false;
-                        errorMessage = ex.Message;
-                        Console.WriteLine(ex.Message.ToString());
-                    }
-                    catch (InvalidCharacterException ex)
-                    {
-                        isValid = false;
-                        errorMessage = ex.Message;
-                        Console.WriteLine(ex.Message.ToString());
-                    }
-                    catch (Exceptions.DivideByZeroException ex)
-                    {
-                        isValid = false;
-                        errorMessage = ex.Message;
-                        Console.WriteLine(ex.Message.ToString());
-                    }
-                    catch (ConsecutiveOperatorsException ex)
-                    {
-                        isValid = false;
-                        errorMessage = ex.Message;
-                        Console.WriteLine(ex.Message.ToString());
-                    }
-
+                    var isValid = validator.CheckExprValidation(input).Success;
+                    var Message = validator.CheckExprValidation(input).Message;
                     if (isValid)
                     {
+                        Expression expression = new Expression(input);
+                        var result = calculator.Calculate(expression);
                         Console.WriteLine(result);
-                        Logging.LogValidCalculation(input, result.ToString());
                     }
                     else
                     {
-                        Logging.LogInvalidCalculation(input, errorMessage);
+                        string errorLogMessage = LogUtils.GetErrorLogMessage(input, Message);
+                        logger.Error(errorLogMessage);
+                        Console.WriteLine(Message);
                     }
                 }
-
             }
         }
     }

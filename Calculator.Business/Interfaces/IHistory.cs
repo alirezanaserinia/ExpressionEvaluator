@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Calculator
+namespace Calculator.Business.Interfaces
 {
-    public enum MenuItems
+    public interface IHistory
     {
-        Calculate = 1,
-        History,
-        Finish
+        public string GetHistory();
     }
 }
