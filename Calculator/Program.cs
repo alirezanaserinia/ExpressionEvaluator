@@ -1,4 +1,7 @@
 ﻿using Calculator;
+using Calculator.Business.Services;
+using Calculator.Business.Utils;
+using Calculator.Domain;
 using System;
 using System.Data;
 
@@ -9,52 +12,39 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
+            Logger logger = new Logger();
+            History history = new History();
+            ExpressionValidator validator = new ExpressionValidator();
+
             string? input = "";
-            /*int userOption = -1;*/
             double result = 0;
 
             while (true)
             {
-                /*List<string> menuItems = new List<string>();
-                menuItems.Add("Expression evaluator");
-                menuItems.Add("History");
-                menuItems.Add("Finish");
-
-                Menu menu = new Menu(menuItems);
-                Console.Write(menu.Show());*/
-
                 input = Console.ReadLine();
-                /*userOption = int.Parse(input);
-                menu.ItemProvider(userOption);*/
 
                 if (input == "HISTORY")
                 {
-                    FileHistoryHandler historyHandler = new FileHistoryHandler("", "", "");
-                    Console.Write(historyHandler.GetLogs());
+                    Console.Write(history.GetHistory());
                 }
                 else if (input == "FINISH")
                     break;
                 else
                 {
-                    MathematicalExpression expression = new MathematicalExpression(input);
-
-                    if (expression.isValid)
+                    var isValid = validator.CheckExprValidation(input).Success;
+                    var Message = validator.CheckExprValidation(input).Message;
+                    if (isValid)
                     {
-                        Calculator calc = new Calculator();
-                        result = calc.Calc(expression);
-                    }
-
-                    FileHistoryHandler historyHandler = new FileHistoryHandler(input, result.ToString(), expression.errorMessage);
-
-                    if (expression.isValid)
-                    {
+                        Expression expression = new Expression(input);
+                        var calculator = new Evaluator(logger, history);
+                        result = calculator.Calculate(expression);
                         Console.WriteLine(result);
-                        historyHandler.LogValidCalculation();
                     }
                     else
                     {
-                        Console.WriteLine(expression.errorMessage);
-                        historyHandler.LogInvalidCalculation();
+                        string errorLogMessage = LogUtils.GetErrorLogMessage(input, Message);
+                        logger.Error(errorLogMessage);
+                        Console.WriteLine(Message);
                     }
                 }
 
